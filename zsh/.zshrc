@@ -24,10 +24,6 @@ export PYTHONSTARTUP="$HOME/.pythonrc"
 export PYENV_ROOT="$HOME/.local/share/pyenv"
 export RBENV_ROOT="$HOME/.local/share/rbenv"
 export NODENV_ROOT="$HOME/.local/share/nodenv"
-export TEXDIR="$HOME/.local/share/texlive/2021"
-export TEXMFHOME="$HOME/.config/texmf"
-export TEXMFVAR="$HOME/.config/texlive2021"
-export TEXMFCONFIG="$TEXMFVAR/texmfconfig"
 export SDKMAN_DIR="$HOME/.local/share/sdkman"
 export GOPATH="$HOME/Documents/workspace/go"
 # export SPARK_HOME="/home/ramot/.local/share/sdkman/candidates/spark/current"
@@ -55,7 +51,6 @@ export PATH="$GOPATH/bin:$PATH"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$RBENV_ROOT/bin:$PATH"
 export PATH="$NODENV_ROOT/bin:$PATH"
-export PATH="$TEXDIR/bin/x86_64-linux:$PATH"
 export PATH="$HOME/.local/share/coursier/bin:$PATH"
 if [ -d "$HOME/.cabal/bin" ] ; then
     PATH="$HOME/.cabal/bin:$PATH"
@@ -65,8 +60,6 @@ fi
 
 # manpath
 export MANPATH="$HOME/.local/share/man:$MANPATH"
-export MANPATH="$TEXDIR/texmf-dist/doc/man:$MANPATH"
-export INFOPATH="$TEXDIR/texmf-dist/doc/info:$INFOPATH"
 
 # language & region
 if [[ -z "$LC_CTYPE" && -z "$LC_ALL" ]]; then
