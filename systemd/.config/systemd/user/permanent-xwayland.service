@@ -1,0 +1,14 @@
+[Unit]
+Description=Spawn XWayland on login
+PartOf=gnome-session-initialized.target
+After=org.gnome.Shell@wayland.service org.gnome.Shell.target gnome-session-manager.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/ramot/.local/bin/permanent_xwayland.py
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=permanent-xwayland
+
+[Install]
+WantedBy=gnome-session-initialized.target

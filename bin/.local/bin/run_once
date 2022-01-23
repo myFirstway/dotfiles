@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+application=$1
+if wmctrl -xl | grep "${application}" > /dev/null ; then
+    # Already running, raising to front
+    wmctrl -x -R "$application"
+else
+    # Not running: starting
+    $@
+fi

@@ -1,0 +1,55 @@
+! special
+*.foreground:   #586069
+*.background:   #f6f8fa
+*.cursorColor:  #586069
+
+! black
+*.color0:       #000000
+*.color8:       #666666
+
+! red
+*.color1:       #cd3131
+*.color9:       #cd3131
+
+! green
+*.color2:       #00bc00
+*.color10:      #14ce14
+
+! yellow
+*.color3:       #949800
+*.color11:      #b5ba00
+
+! blue
+*.color4:       #0451a5
+*.color12:      #0451a5
+
+! purple
+*.color5:       #bc05bc
+*.color13:      #bc05bc
+
+! cyan
+*.color6:       #0598bc
+*.color14:      #0598bc
+
+! white
+*.color7:       #555555
+*.color15:      #a5a5a5
+XTerm.termName: xterm-256color
+XTerm*scaleHeight:	1.1
+XTerm*cursorBlink:	true
+xterm*VT100*geometry:	80x24
+! xterm*font:	-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso8859-1
+XTerm*loginShell:	true
+xterm*scrollBar:	false
+! xterm*rightScrollBar:	true
+XTerm*title:	XTerm
+XTerm*iconName:	XTerm
+XTerm*saveLines:	50000
+XTerm*jumpScroll:	true
+XTerm*scrollTtyOutput:	false
+! xterm*scrollKey:	false
+XTerm*alwaysUseMods:	true
+XTerm*metaSendsEscape:	true
+XTerm*utf8Title:	true
+! XTerm*faceName:	Ubuntu Mono:antialias=true
+XTerm*faceSize:	12

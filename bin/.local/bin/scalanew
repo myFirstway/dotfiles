@@ -1,0 +1,70 @@
+#!/bin/bash
+
+read -p '[Project name]       : ' projectname
+read -p '[Organization]       : ' orgname
+read -p '[Organization name]  : ' organization
+read -p '[Scala version]      : ' scalaver
+
+projectdir=${projectname//\ /}
+cleanorgname=${orgname//\ /}
+
+if [ -d "$projectdir" ]; then
+  exit 127
+fi
+
+mkdir "$projectdir"
+mkdir -p "$projectdir"/src/{main,test}/scala/${cleanorgname//\./\/}/$projectdir
+mkdir -p "$projectdir"/src/main/resources
+mkdir -p "$projectdir"/{lib,project,target}
+
+echo "import Dependencies._
+
+ThisBuild / scalaVersion     := \"$scalaver\"
+ThisBuild / version          := \"0.1.0-SNAPSHOT\"
+ThisBuild / organization     := \"$cleanorgname\"
+ThisBuild / organizationName := \"$organization\"
+
+lazy val root = (project in file(\".\"))
+  .settings(
+    name := \"$projectdir\",
+    libraryDependencies += scalaTest % Test
+  )
+
+// See https://www.scala-sbt.org/1.x/docs/Using-Sonatype.html for instructions on how to publish to Sonatype." > "$projectdir"/build.sbt
+
+echo 'import sbt._
+
+object Dependencies {
+  lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.1.1"
+}' > "$projectdir"/project/Dependencies.scala
+
+echo 'version = "2.6.3"
+maxColumn = 120
+
+assumeStandardLibraryStripMargin = true
+
+align.preset = more
+align.stripMargin = true
+align.openParenCallSite = false
+align.openParenDefnSite = false
+
+continuationIndent.defnSite = 2
+
+danglingParentheses = true
+
+newlines.topLevelStatements = [
+    before
+    after
+]
+
+project.git = true
+
+rewrite.rules = [
+    AsciiSortImports
+    PreferCurlyFors
+    RedundantParens
+]
+
+spaces.inImportCurlyBraces = true
+
+unindentTopLevelOperators = true' > $projectdir/.scalafmt.conf

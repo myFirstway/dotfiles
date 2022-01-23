@@ -1,0 +1,18 @@
+# no need of this
+.vscode
+/vim/.vim/.netrwhist
+/vim/.vim/tags
+/vim/.vim/bundle
+/vim/.vim/autoload/plug.vim
+/zsh/.config/zsh/cache
+*.pyc
+*~
+*.log
+*.tmp
+*.swp
+/antigen-hs/repos
+/tmp
+*.old
+*.bak
+*.zwc
+/virtualenvs/*/

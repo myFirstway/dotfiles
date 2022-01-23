@@ -1,0 +1,16 @@
+#!/usr/bin/sh
+
+exec /opt/Disney+-linux-x64/Disney+ &
+
+while true
+do
+  window_id=$(/bin/wmctrl -lp | /bin/grep 'Disney' | /bin/awk '{ print $1 }')
+
+  /bin/xprop -f _GTK_THEME_VARIANT 8u -set _GTK_THEME_VARIANT dark -id "$window_id" &>/dev/null
+
+  if [[ $? == 0 ]]; then
+    break
+  fi
+
+  sleep 0.1
+done

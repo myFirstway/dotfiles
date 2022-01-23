@@ -1,0 +1,25 @@
+[user]
+	email = ramot@ramottamado.dev
+	name = Tamado Sitohang
+	signingkey = ramot@ramottamado.dev
+[credential]
+	helper = cache
+[core]
+	pager = less
+	autocrlf = input
+[color]
+	ui = true
+	diff = always
+[diff]
+	tool = meld
+[difftool]
+	prompt = false
+[gui]
+	spellingdictionary = none
+	tabsize = 4
+[push]
+	default = simple
+[commit]
+	gpgsign = true
+[init]
+	defaultBranch = main

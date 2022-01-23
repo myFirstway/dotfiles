@@ -1,0 +1,4 @@
+# im-config(8) generated on Wed, 27 Jan 2016 06:34:36 +0700
+run_im ibus
+# im-config signature: 47d539ecd3f6451a8ddc75433f2cadbe  -
+setxkbmap -option terminate:ctrl_alt_bksp

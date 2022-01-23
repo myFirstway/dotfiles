@@ -1,0 +1,23 @@
+import atexit
+import os
+import readline
+import sys
+import rlcompleter
+
+
+if sys.version_info >= (3, 0) and hasattr(sys, 'real_prefix'):
+    PYTHON_HISTORY_FILE = os.path.join(os.environ['HOME'],
+                                       '.python_history')
+    if os.path.exists(PYTHON_HISTORY_FILE):
+        readline.read_history_file(PYTHON_HISTORY_FILE)
+        atexit.register(readline.write_history_file, PYTHON_HISTORY_FILE)
+else:
+    history_file = os.path.join(os.environ['HOME'], '.python2_history')
+    try:
+        readline.read_history_file(history_file)
+        atexit.register(readline.write_history_file, history_file)
+    except IOError:
+        pass
+
+readline.parse_and_bind("tab: complete")
+del os, atexit, readline, rlcompleter, sys

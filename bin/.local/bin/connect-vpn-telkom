@@ -1,0 +1,25 @@
+#!/bin/env bash
+
+STATUS=$(/usr/bin/warp-cli status | grep 'Status update:' | awk '{ print $3 }')
+
+if [ "$STATUS" = "Disconnected" ]; then
+  CONNECTED=$(/usr/bin/warp-cli connect)
+
+  sleep 2
+
+  if [ "$CONNECTED" = "Success" ]; then
+    /usr/bin/nmcli connection up Trees
+    [[ $? -ne 0 ]] && /usr/bin/warp-cli disconnect
+  fi
+elif [ "$STATUS" = "Connected" ]; then
+  TREES_STATUS=$(/usr/bin/nmcli -f GENERAL.STATE con show Trees | awk '{ print $2}')
+
+  if [ "$TREES_STATUS" = "activated" ]; then
+    /usr/bin/nmcli con down Trees
+    /usr/bin/warp-cli disconnect
+  else
+    /usr/bin/nmcli con up Trees
+    [[ $? -ne 0 ]] && /usr/bin/warp-cli disconnect
+  fi
+fi
+

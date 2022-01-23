@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+cat /usr/share/applications/$1.desktop | \
+  sed '/^Hidden=/d' | \
+  <<<'Hidden=true' \
+  > ~/.local/share/applications/$1.desktop

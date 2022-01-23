@@ -1,0 +1,10 @@
+[Unit]
+Description=Max Charge ASUS
+
+[Service]
+Environment=MAX_CHARGE=90
+EnvironmentFile=/etc/default/powermanager
+ExecStart=/usr/bin/cat $MAX_CHARGE > /sys/class/power_supply/BAT0/charge_control_end_threshold
+
+[Install]
+WantedBy=graphical.target

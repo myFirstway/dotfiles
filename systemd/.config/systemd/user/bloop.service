@@ -1,0 +1,12 @@
+[Unit]
+Description=Bloop Scala build server
+
+[Service]
+Environment=PATH=/home/ramot/.local/share/sdkman/candidates/java/current/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin
+ExecStart=/home/ramot/.local/share/coursier/bin/bloop server
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=bloop
+
+[Install]
+WantedBy=default.target

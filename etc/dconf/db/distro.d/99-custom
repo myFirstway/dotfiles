@@ -1,0 +1,20 @@
+[org/gnome/desktop/peripherals/touchpad]
+tap-to-click=true
+
+[org/gnome/desktop/interface]
+clock-show-date=false
+clock-show-weekday=true
+# font-name='Noto Sans Display 11'
+# text-scaling-factor=1.25
+# document-font-name='Noto Sans 11'
+# monospace-font-name='Noto Sans Mono 10'
+show-battery-percentage=false
+
+[org/gnome/desktop/input-sources]
+xkb-options=['shift:both_capslock']
+
+[org/gnome/desktop/a11y]
+always-show-universal-access-status=false
+
+[org/gnome/shell]
+app-picker-layout=[]
