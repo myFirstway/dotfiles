@@ -11,3 +11,6 @@ case $HIST_STAMPS in
   "yyyy-mm-dd") alias history='fc -il 1' ;;
   *) alias history='fc -l 1' ;;
 esac
+
+# Ensure unique
+HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=on
