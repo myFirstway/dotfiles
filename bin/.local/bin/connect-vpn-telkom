@@ -1,25 +1,57 @@
 #!/bin/env bash
 
-STATUS=$(/usr/bin/warp-cli status | grep 'Status update:' | awk '{ print $3 }')
+set -e
 
-if [ "$STATUS" = "Disconnected" ]; then
-  CONNECTED=$(/usr/bin/warp-cli connect)
+_get_status() {
+  /usr/bin/warp-cli status | grep 'Status update:' | awk '{ print $3 }'
+}
+
+_get_trees_status() {
+  /usr/bin/nmcli -f GENERAL.STATE con show Trees | awk '{ print $2 }'
+}
+
+WARP_STATUS=$(_get_status)
+
+if [ "$WARP_STATUS" = "Disconnected" ]; then
+  /usr/bin/notify-send -i network-vpn "VPN Status" "Connecting to Trees VPN"
+
+  if ! /usr/bin/warp-cli connect; then
+    /usr/bin/notify-send -i network-error "WARP Error" "Can't connect to WARP service"
+
+    return 127
+  fi
 
   sleep 2
 
-  if [ "$CONNECTED" = "Success" ]; then
-    /usr/bin/nmcli connection up Trees
-    [[ $? -ne 0 ]] && /usr/bin/warp-cli disconnect
-  fi
-elif [ "$STATUS" = "Connected" ]; then
-  TREES_STATUS=$(/usr/bin/nmcli -f GENERAL.STATE con show Trees | awk '{ print $2}')
+  if [ "$(_get_status)" = "Connected" ]; then
+    if [ "$(_get_trees_status)" != "activated" ]; then
+      if ! /usr/bin/nmcli con up Trees; then
+        /usr/bin/notify-send -i network-error "VPN Error" "Can't connect to Trees VPN service"
 
-  if [ "$TREES_STATUS" = "activated" ]; then
-    /usr/bin/nmcli con down Trees
+        return 127
+      fi
+    else
+      /usr/bin/nmcli con down Trees
+
+      if ! /usr/bin/nmcli con up Trees; then
+        /usr/bin/notify-send -i network-error "VPN Error" "Can't connect to Trees VPN service"
+        /usr/bin/warp-cli disconnect
+
+        return 127
+      fi
+    fi
+  fi
+elif [ "$WARP_STATUS" = "Connected" ]; then
+  if [ "$(_get_trees_status)" = "activated" ]; then
+    /usr/bin/notify-send -i network-vpn "VPN Status" "Disconnecting from Trees VPN"
+    /usr/bin/nmcli con down Trees || true
     /usr/bin/warp-cli disconnect
   else
-    /usr/bin/nmcli con up Trees
-    [[ $? -ne 0 ]] && /usr/bin/warp-cli disconnect
+    if ! /usr/bin/nmcli con up Trees; then
+      /usr/bin/notify-send -i network-error "VPN Error" "Can't connect to Trees VPN service"
+      /usr/bin/warp-cli disconnect
+
+      return 127
+    fi
   fi
 fi
-
