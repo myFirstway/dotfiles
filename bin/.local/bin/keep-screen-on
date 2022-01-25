@@ -1,0 +1,7 @@
+#!/bin/env bash
+
+/usr/bin/gdbus call \
+  --session \
+  --dest org.gnome.Shell \
+  --object-path /dev/ramottamado/KeepScreenOn \
+  --method dev.ramottamado.KeepScreenOn.Toggle

@@ -1,7 +1,0 @@
-#!/bin/env bash
-
-/usr/bin/gdbus call \
-  --session \
-  --dest org.gnome.Shell \
-  --object-path /dev/ramottamado/Caffeine \
-  --method dev.ramottamado.Caffeine.Toggle
