@@ -1,10 +1,9 @@
-## Command history configuration
+# command history configuration
 HISTFILE=$HOME/.zsh_history
-
 HISTSIZE=1000000
 SAVEHIST=1000000
 
-# Show history
+# show history
 case $HIST_STAMPS in
   "mm/dd/yyyy") alias history='fc -fl 1' ;;
   "dd.mm.yyyy") alias history='fc -El 1' ;;
@@ -12,5 +11,5 @@ case $HIST_STAMPS in
   *) alias history='fc -l 1' ;;
 esac
 
-# Ensure unique
+# ensure unique
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=on

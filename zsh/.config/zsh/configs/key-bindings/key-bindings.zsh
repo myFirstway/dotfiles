@@ -1,11 +1,11 @@
-# Key bindings for my zsh config
+# key bindings for my zsh config
 # forked from oh-my-zsh keybindings library
 # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html
 # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Zle-Builtins
 # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Standard-Widgets
 
-# Make sure that the terminal is in application mode when zle is active, since
-# only then values from $terminfo are valid
+# make sure that the terminal is in application mode when zle is active
+# since only then values from $terminfo are valid
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   function zle-line-init() {
     echoti smkx
@@ -19,7 +19,10 @@ fi
 
 bindkey -e                                            # Use emacs key bindings
 
-# Is this really necessary?
+# should this be in keybindings?
+bindkey -M menuselect '^o' accept-and-infer-next-history
+
+# is this really necessary?
 # bindkey '\ew' kill-region                             # [Esc-w] - Kill from the cursor to the mark
 bindkey '^k' kill-region                              # [Ctrl-k] - Kill from the cursor to the mark
 # bindkey -s '\el' 'ls\n'                               # [Esc-l] - run command: ls
@@ -33,9 +36,8 @@ bindkey "^[[6~" history-beginning-search-forward
   # bindkey "${terminfo[knp]}" down-line-or-history     # [PageDown] - Down a line of history
 # fi
 
-# Bind terminal-specific up and down keys
-# Bind in both emacs and vi modes so it works in both, and is not
-# sensitive to whether this is loaded before or after the vi-mode plugin
+# bind terminal-specific up and down keys
+# bind in both emacs and vi modes so it works in both
 if [[ -n "$terminfo[kcuu1]" ]]; then
   bindkey -M emacs "$terminfo[kcuu1]" history-substring-search-up
   bindkey -M viins "$terminfo[kcuu1]" history-substring-search-up
@@ -58,7 +60,7 @@ bindkey '^[[1;5D' backward-word                       # [Ctrl-LeftArrow] - move 
 if [[ "${terminfo[kcbt]}" != "" ]]; then
   bindkey "${terminfo[kcbt]}" reverse-menu-complete   # [Shift-Tab] - move through the completion menu backwards
 fi
-bindkey '^?' backward-delete-char                     # [Backspace] - delete backward
+# bindkey '^?' backward-delete-char                     # [Backspace] - delete backward (conflict with autopair)
 if [[ "${terminfo[kdch1]}" != "" ]]; then
   bindkey "${terminfo[kdch1]}" delete-char            # [Delete] - delete forward
 else
@@ -67,10 +69,10 @@ else
   bindkey "\e[3~" delete-char
 fi
 
-# Edit the current command line in $EDITOR
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '\C-x\C-e' edit-command-line
+# edit the current command line in $EDITOR
+# autoload -U edit-command-line
+# zle -N edit-command-line
+# bindkey '\C-x\C-e' edit-command-line
 
 # file rename magick
 bindkey "^[m" copy-prev-shell-word
@@ -82,21 +84,22 @@ bindkey '\e[OF' end-of-line
 # completion
 bindkey '^I' expand-or-complete-prefix
 
-#bindkey -e  ## emacs key bindings
+# bindkey -e  ## emacs key bindings
 
-#bindkey '^[[A' up-line-or-search
-#bindkey '^[[B' down-line-or-search
-#bindkey '^[^[[C' emacs-forward-word
-#bindkey '^[^[[D' emacs-backward-word
+# bindkey '^[[A' up-line-or-search
+# bindkey '^[[B' down-line-or-search
+# bindkey '^[^[[C' emacs-forward-word
+# bindkey '^[^[[D' emacs-backward-word
 
-#bindkey -s '^X^Z' '%-^M'
-#bindkey '^[e' expand-cmd-path
-#bindkey '^[^I' reverse-menu-complete
-#bindkey '^X^N' accept-and-infer-next-history
-#bindkey '^W' kill-region
-#bindkey '^I' complete-word
-## Fix weird sequence that rxvt produces
-#bindkey -s '^[[Z' '\t'
+# bindkey -s '^X^Z' '%-^M'
+# bindkey '^[e' expand-cmd-path
+# bindkey '^[^I' reverse-menu-complete
+# bindkey '^X^N' accept-and-infer-next-history
+# bindkey '^W' kill-region
+# bindkey '^I' complete-word
+
+# Fix weird sequence that rxvt produces
+# bindkey -s '^[[Z' '\t'
 
 # stop mapping Ctrl+S
 stty -ixon
@@ -113,5 +116,5 @@ stty -ixoff
 # bindkey '\eOF'    end-of-line         # gnome-terminal
 
 # if [[ $TERM == 'xterm' || $TERM == 'xterm-256color' ]]; then
-  # echo -e -n "\x1b[\x35 q"              # xterm cursor
+#   echo -e -n "\x1b[\x35 q"              # xterm cursor
 # fi

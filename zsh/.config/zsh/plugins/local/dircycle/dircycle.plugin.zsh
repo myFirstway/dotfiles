@@ -1,5 +1,5 @@
 # forked from oh-my-zsh dircycle plugin
-# (c) 2017 Tamado Sitohang
+# (c) 2017 Tamado Sitohang, omz maintainers
 # MIT License
 
 # enables cycling through the directory stack using
@@ -12,32 +12,28 @@
 #  pushd +N: start counting from left of `dirs' output
 #  pushd -N: start counting from right of `dirs' output
 
+## cycle left
 insert-cycledleft () {
   emulate -L zsh
   setopt nopushdminus
 
   builtin pushd -q -0 &>/dev/null || true
   zle reset-prompt
-  # workon_cwd
-  # load-nvmrc
   _pyenv_virtualenv_hook
-  # check_cenv
-  sleep 0.1
+  # sleep 0.1
   arc_refresh
 }
 zle -N insert-cycledleft
 
+## cycle right
 insert-cycledright () {
   emulate -L zsh
   setopt nopushdminus
 
   builtin pushd -q +1 &>/dev/null || true
   zle reset-prompt
-  # workon_cwd
-  # load-nvmrc
   _pyenv_virtualenv_hook
-  # check_cenv
-  sleep 0.1
+  # sleep 0.1
   arc_refresh
 }
 zle -N insert-cycledright

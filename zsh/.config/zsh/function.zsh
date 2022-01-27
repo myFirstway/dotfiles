@@ -1,4 +1,4 @@
-# Only works in Debian based
+## only works in Debian based
 # function command_not_found_handler {
   # if [[ -x /usr/lib/command-not-found ]] ; then
     # /usr/lib/command-not-found -- "$1"
@@ -9,6 +9,7 @@
   # fi
 # }
 
+## ccls gen
 ccls_gen() {
   cat > .ccls << EOL
 -Wall
@@ -18,10 +19,31 @@ ccls_gen() {
 EOL
 }
 
-zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
+## gitignore
+gitignore() {
+  curl -sL https://www.gitignore.io/api/$1 -o .gitignore
+}
 
-# systemd fix
+## reload zshrc
+reload()
+{
+  local cache=$ZSH_CACHE_DIR
+  autoload -U compinit zrecompile
+  compinit -d "$cache/zcompdump"
 
+  for f in ~/.zshrc "$cache/zcompdump"; do
+    zrecompile -p $f && command rm -f $f.zwc.old
+  done
+
+  source ~/.zshrc
+}
+
+## zsh add history
+zshaddhistory() {
+  whence ${${(z)1}[1]} >| /dev/null || return 1
+}
+
+## systemd fix
 _systemctl_unit_state() {
   typeset -gA _sys_unit_state
   _sys_unit_state=( $(__systemctl list-unit-files "$PREFIX*" | awk '{print $1, $2}') )

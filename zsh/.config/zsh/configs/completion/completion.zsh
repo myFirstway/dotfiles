@@ -1,15 +1,16 @@
 # oh-my-zsh completion library
 # modified to work with my zsh config
-# fixme - the load process here seems a bit bizarre
+# FIXME: the load process here seems a bit bizarre
 
 zmodload -i zsh/complist
 
 WORDCHARS='*?.[]~-_=&;!#$%^(){}<>'
 
-## description
+# description
 zstyle ':completion:*:descriptions' format '%B%d%b'
 
-## case-insensitive (all),partial-word and then substring completion
+# case-insensitive (all),partial-word and then substring completion
+typeset -H MATCH MBEGIN MEND match mbegin mend
 if [ "$CASE_SENSITIVE" = "true" ]; then
   zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 else
@@ -19,13 +20,9 @@ else
     zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
   fi
 fi
-unset CASE_SENSITIVE HYPHEN_INSENSITIVE
+unset CASE_SENSITIVE HYPHEN_INSENSITIVE MATCH MBEGIN MEND match mbegin mend
 
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-# should this be in keybindings?
-bindkey -M menuselect '^o' accept-and-infer-next-history
-
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 if [ "$OSTYPE[0,7]" = "solaris" ]
@@ -35,15 +32,14 @@ else
   zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
 fi
 
-
 # disable named-directories autocompletion
 zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
 
-# Use caching so that commands like apt and dpkg complete are useable
+# use caching so that commands like apt and dpkg complete are usable
 zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion::complete:*' cache-path $ZSH_CACHE_DIR
 
-# Don't complete uninteresting users
+# don't complete uninteresting users
 zstyle ':completion:*:*:*:users' ignored-patterns \
         adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna \
         clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm \
