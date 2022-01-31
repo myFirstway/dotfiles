@@ -5,6 +5,7 @@
 /vim/.vim/bundle
 /vim/.vim/autoload/plug.vim
 /zsh/.config/zsh/cache
+/zsh/.config/zsh/external/*
 *.pyc
 *~
 *.log

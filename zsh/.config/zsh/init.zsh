@@ -1,11 +1,11 @@
 # external plugins
-source ${0:A:h}/plugins/external/init.zsh
+source ${0:A:h}/external.zsh
 
 # local plugins
-source ${0:A:h}/plugins/local/init.zsh
+source ${0:A:h}/local.zsh
 
 # themes
-source ${0:A:h}/themes/init.zsh
+source ${0:A:h}/themes.zsh
 
 # configs
-source ${0:A:h}/configs/init.zsh
+source ${0:A:h}/configs.zsh

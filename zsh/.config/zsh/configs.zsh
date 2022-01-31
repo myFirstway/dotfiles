@@ -1,0 +1,6 @@
+source "${0:A:h}/configs/setopts/setopts.zsh"
+source "${0:A:h}/configs/completion/completion.zsh"
+source "${0:A:h}/configs/history/history.zsh"
+source "${0:A:h}/configs/alias/alias.zsh"
+source "${0:A:h}/configs/key-bindings/key-bindings.zsh"
+source "${0:A:h}/configs/custom/custom.zsh"
