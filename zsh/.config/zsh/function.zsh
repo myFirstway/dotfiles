@@ -41,6 +41,12 @@ reload()
 ## zsh add history
 zshaddhistory() {
   whence ${${(z)1}[1]} >| /dev/null || return 1
+
+  # Don't add command that is not completed
+  emulate -L zsh
+  # set -x
+  [[ ${${(z)1}[-1]} == ';' ]] || return 1
+  # set +x
 }
 
 ## systemd fix

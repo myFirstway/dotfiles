@@ -25,7 +25,7 @@ fpath+=$ZSH/function
 if [[ $TERM == "xterm-256color" || $TERM == "screen-256color" || $TERM == "xterm-kitty" ]]; then
   source $ZSH/init.zsh
 else
-  source $ZSH/plugins/history/history.zsh
+  source $ZSH/configs/history/history.zsh
 fi
 
 # show todo
