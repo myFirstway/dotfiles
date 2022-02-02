@@ -195,11 +195,13 @@ arc_render() {
   typeset -a arc_parts arc_rparts
 
   arc_parts+=("$(_get_cwd)")
-  arc_parts+=("${ARC_VENV_STATUS}")
 
   typeset -H MATCH MBEGIN MEND match mbegin mend
+  if [[ -n $ARC_VENV_STATUS ]]; then
+    arc_parts+=("${ARC_VENV_STATUS}")
+  fi
   if [[ -n $ARC_VCS_INFO[branch] ]]; then
-    arc_parts+=(" ${ARC_VCS_INFO[branch]% }")
+    arc_parts+=("${ARC_VCS_INFO[branch]}")
   fi
   if [[ -n $ARC_VCS_INFO[time] ]]; then
     arc_rparts+=("${ARC_VCS_INFO[time]}")
@@ -208,7 +210,7 @@ arc_render() {
 
   arc_rparts+=("$(_is_suspended)")
 
-  export PROMPT="${(j..)arc_parts} "
+  export PROMPT="${(j. .)arc_parts} "
   export RPROMPT="${(j. .)arc_rparts}"
   export PROMPT2="  %F{green}>%f "
   export SPROMPT="Correct %F{red}%R%f to %F{green}%r%f d[Yes, No, Abort, Edit]? "
@@ -241,22 +243,22 @@ arc_job_vcs_info() {
 arc_git_prompt() {
   typeset git_branch=$(_get_git_branch)
   typeset git_status=$(_get_git_status)
-  typeset result
+  typeset -a result
 
   typeset -H MATCH MBEGIN MEND match mbegin mend
   if [[ $1 == "branch" ]]; then
     if [[ -n "${git_branch}" ]]; then
-      result="• $git_branch "
+      result+=("• $git_branch")
       if [[ -n "${git_status}" ]]; then
-        result="$result$git_status"
+        result+=("$git_status")
       fi
     fi
   elif [[ $1 == "time" ]]; then
-    result=$(_get_git_time_since_commit)
+    result+=("$(_get_git_time_since_commit)")
   fi
   unset MATCH MBEGIN MEND match mbegin mend
 
-  echo $result
+  echo ${(j. .)result}
 }
 
 ## get git branch
@@ -308,6 +310,8 @@ _get_git_branch() {
 ## get git status
 ## git master •▾
 _get_git_status() {
+  typeset -a git_status
+
   typeset circle_icon="•"
   typeset git_prompt_ahead="%F{14}▴%f"
   typeset git_prompt_behind="%F{13}▾%f"
@@ -315,27 +319,26 @@ _get_git_status() {
   typeset git_prompt_unstaged="%F{11}$circle_icon%f"
   typeset git_prompt_untracked="%F{9}$circle_icon%f"
   typeset git_index=$(git status --porcelain -b 2> /dev/null)
-  typeset git_status
 
   typeset -H MATCH MBEGIN MEND match mbegin mend
   if [[ $git_index =~ '\?\? ' ]]; then
-    git_status="$git_status$git_prompt_untracked"
+    git_status+=("$git_prompt_untracked")
   fi
   if [[ $git_index =~ $'\n.[MTD] ' ]]; then
-    git_status="$git_status$git_prompt_unstaged"
+    git_status+=("$git_prompt_unstaged")
   fi
   if [[ $git_index =~ $'\n[AMRDU]. ' ]]; then
-    git_status="$git_status$git_prompt_staged"
+    git_status+=("$git_prompt_staged")
   fi
   if [[ $git_index =~ ^'## .*ahead' ]]; then
-    git_status="$git_status$git_prompt_ahead"
+    git_status+=("$git_prompt_ahead")
   fi
   if [[ $git_index =~ ^'## .*behind' ]]; then
-    git_status="$git_status$git_prompt_behind"
+    git_status+=("$git_prompt_behind")
   fi
   unset MATCH MBEGIN MEND match mbegin mend
 
-  echo $git_status
+  echo ${(j..)git_status}
 }
 
 ## get git time since commit
@@ -391,40 +394,40 @@ _is_suspended() {
 
 ## get cwd
 _get_cwd() {
-  typeset current_working_dir
-
-  current_working_dir="%F{blue}%15<..<%1~%<<%f"
+  typeset -a current_working_dir
 
   if [ -f /run/.containerenv ] && [ -f /run/.toolboxenv ]; then
-    current_working_dir="%F{magenta}⬢%f $current_working_dir"
+    current_working_dir+=("%F{magenta}⬢%f")
   fi
 
-  echo $current_working_dir
+  current_working_dir+=("%F{blue}%15<..<%1~%<<%f")
+
+  echo ${(j. .)current_working_dir}
 }
 
 ## get venv status
 _get_venv_status() {
-  typeset venv_name
+  typeset -a venv_name
 
   if [[ -n $CONDA_DEFAULT_ENV ]]; then
-    venv_name+=" • %F{12}conda: %15<..<${CONDA_DEFAULT_ENV:t}%<<%f"
+    venv_name+=("• %F{2}%15<..<${CONDA_DEFAULT_ENV:t}%<<%f")
   elif [[ -n $VIRTUAL_ENV ]]; then
-    venv_name+=" • %F{12}venv: %15<..<${VIRTUAL_ENV:t}%<<%f"
+    venv_name+=("• %F{2}%15<..<${VIRTUAL_ENV:t}%<<%f")
   fi
   if [[ -f .node-version ]]; then
     typeset nodenv_name=$(nodenv version-name 2>/dev/null)
 
     if [[ -n $nodenv_name ]]; then
-      venv_name+=" • %F{12}node: %15<..<$nodenv_name%<<%f"
+      venv_name+=("• %F{2}%15<..<$nodenv_name%<<%f")
     fi
   fi
   if [[ -f .ruby-version ]]; then
     typeset rbenv_name=$(rbenv version-name 2>/dev/null)
 
     if [[ -n $rbenv_name ]]; then
-      venv_name+=" • %F{12}ruby: %15<..<$rbenv_name%<<%f"
+      venv_name+=("• %F{1}%15<..<$rbenv_name%<<%f")
     fi
   fi
 
-  echo $venv_name
+  echo ${(j. .)venv_name}
 }
