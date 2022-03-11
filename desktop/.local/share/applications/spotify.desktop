@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Spotify helper
+Comment=Helper for enabling MPRIS to call Spotify from notification
+Icon=help-about
+Exec=spot.sh
+Terminal=false
+NoDisplay=true

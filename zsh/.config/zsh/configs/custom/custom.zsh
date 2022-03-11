@@ -1,17 +1,13 @@
 # LESS_TERMCAP
-export LESS_TERMCAP_mb=$(tput bold; tput setaf 1) # red
-export LESS_TERMCAP_md=$(tput bold; tput setaf 1) # red
-export LESS_TERMCAP_me=$(tput sgr0)
-export LESS_TERMCAP_so=$(tput setaf 15; tput setab 7) # reverse
-export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
-export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 2) # white
-export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
-export LESS_TERMCAP_mr=$(tput rev)
-export LESS_TERMCAP_mh=$(tput dim)
-export LESS_TERMCAP_ZN=$(tput ssubm)
-export LESS_TERMCAP_ZV=$(tput rsubm)
-export LESS_TERMCAP_ZO=$(tput ssupm)
-export LESS_TERMCAP_ZW=$(tput rsupm)
+export LESS_TERMCAP_mb=$(printf '\33[1;31m]') # red
+export LESS_TERMCAP_md=$(printf '\33[1;31m') # red
+export LESS_TERMCAP_me=$(printf '\33[0;10m')
+export LESS_TERMCAP_so=$(printf '\33[97;40m') # reverse
+export LESS_TERMCAP_se=$(printf '\33[27;0;10m')
+export LESS_TERMCAP_us=$(printf '\33[4;1;32m') # white
+export LESS_TERMCAP_ue=$(printf '\33[24;0;10m')
+export LESS_TERMCAP_mr=$(printf '\33[7m')
+export LESS_TERMCAP_mh=$(printf '\33[2m')
 export GROFF_NO_SGR=1 # for Konsole and gnome-terminal
 
 # zsh highlight

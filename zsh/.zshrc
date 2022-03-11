@@ -28,13 +28,6 @@ else
   source $ZSH/configs/history/history.zsh
 fi
 
-# show todo
-# if [[ $(todo) != '' ]]; then
- # JOAO="$fg_bold[white]TODO:$reset_color"
- # echo $JOAO
- # todo --filter -done +children
-# fi
-
 # show fortune
 # if [[ $TERM == "xterm-256color" || $TERM == "screen-256color" ]]; then
   # local fortune=$(fortune $HOME/Documents/resources/fortune/bible/proverbs)

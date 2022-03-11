@@ -5,7 +5,7 @@ After=org.gnome.Shell@wayland.service org.gnome.Shell.target gnome-session-manag
 
 [Service]
 Type=oneshot
-ExecStart=/home/ramot/.local/bin/permanent_xwayland.py
+ExecStart=/home/ramot/.local/bin/permanent-xwayland
 StandardOutput=journal
 StandardError=journal
 SyslogIdentifier=permanent-xwayland

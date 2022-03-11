@@ -2,6 +2,6 @@
 Type=Application
 Name=Trees VPN (Telkom Network)
 Comment=Connect to Trees VPN via Telkom Network with WARP
-Icon=dialog-password
+Icon=application-x-firmware
 Exec=/home/ramot/.local/bin/connect-vpn-telkom
 Terminal=false
