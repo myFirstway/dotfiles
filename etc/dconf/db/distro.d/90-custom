@@ -17,4 +17,4 @@ xkb-options=['shift:both_capslock']
 always-show-universal-access-status=false
 
 [org/gnome/shell]
-app-picker-layout=[]
+app-picker-layout=@aa{sv} []
